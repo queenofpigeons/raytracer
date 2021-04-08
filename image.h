@@ -12,7 +12,7 @@ struct Pixel {
 
     Pixel() : r(0), g(0), b(0), a(0) {};
 
-    int normalize(float f);
+    void normalize();
 };
 
 struct Image {

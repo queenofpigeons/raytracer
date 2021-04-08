@@ -6,7 +6,7 @@
 #include "geometry.h"
 
 void Point::normalize() {
-    float norm = sqrt(*this * *this);
+    float norm = sqrt(x*x + y*y + z*z);
     x /= norm;
     y /= norm;
     z /= norm;

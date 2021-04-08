@@ -9,7 +9,7 @@
 
 void render(const Sphere &sphere) {
     const int width    = 1024;
-    const int height   = 768;
+    const int height   = 1024;
     const float fov    = M_PI/2.;
     Image framebuffer(width, height);
 
@@ -19,13 +19,15 @@ void render(const Sphere &sphere) {
         }
     }
 
-    for (size_t j = 0; j<height; j++) {
-        for (size_t i = 0; i<width; i++) {
-            float x =  (2*(i + 0.5)/(float)width  - 1) * tan(fov/2.) * width/(float)height;
-            float y = -(2*(j + 0.5)/(float)height - 1) * tan(fov/2.);
-            Point dir = Point(x, y, -1);
+    Point camera = Point(0, 0, -50);
+    for (int j = 0; j<height; j++) {
+        for (int i = 0; i < width; i++) {
+            float x = (float)(i - width / 2.) / width;
+            float y = (float)(j - height / 2.) / height;
+            Point dir = Point(-camera.x + x, -camera.y + y, -camera.z - 49);
             dir.normalize();
-            framebuffer.data[i+j*width] = cast_ray(Ray(dir), sphere);
+            //std::cout << dir.x << " " << dir.y << " " << dir.z << std::endl;
+            framebuffer.data[i + j * width] = cast_ray(Ray(camera, dir), sphere);
         }
     }
 
@@ -41,7 +43,7 @@ void render(const Sphere &sphere) {
 }
 
 int main() {
-    Sphere sphere(Point(-3, 0, -16), 2);
+    Sphere sphere(Point(0, 0, 0), 2);
     render (sphere);
     return 0;
 }

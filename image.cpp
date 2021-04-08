@@ -4,7 +4,8 @@
 #include <iostream>
 #include "image.h"
 
-int Pixel::normalize(float f) {
-    int res = f * 255;
-    return res;
+void Pixel::normalize() {
+    r *= 255;
+    g *= 255;
+    b *= 255;
 }

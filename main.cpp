@@ -7,7 +7,7 @@
 #include "raytracing.h"
 #include "image.h"
 
-void render(const Sphere &sphere) {
+void render(const std::vector<Sphere> &spheres) {
     const int width    = 1024;
     const int height   = 1024;
     const float fov    = M_PI/2.;
@@ -27,7 +27,7 @@ void render(const Sphere &sphere) {
             Point dir = Point(-camera.x + x, -camera.y + y, -camera.z - 49);
             dir.normalize();
             //std::cout << dir.x << " " << dir.y << " " << dir.z << std::endl;
-            framebuffer.data[i + j * width] = cast_ray(Ray(camera, dir), sphere);
+            framebuffer.data[i + j * width] = cast_ray(Ray(camera, dir), spheres);
         }
     }
 
@@ -43,7 +43,15 @@ void render(const Sphere &sphere) {
 }
 
 int main() {
-    Sphere sphere(Point(0, 0, 0), 2);
-    render (sphere);
+    Material      ivory(Pixel(0.4, 0.4, 0.3, 1));
+    Material red_rubber(Pixel(0.3, 0.1, 0.1, 1));
+
+    std::vector<Sphere> spheres;
+    spheres.push_back(Sphere(Point(-3, 0, -16), 2, ivory));
+    spheres.push_back(Sphere(Point(-1.0, -1.5, -12), 2, red_rubber));
+    spheres.push_back(Sphere(Point( 1.5, -0.5, -18), 3, red_rubber));
+    spheres.push_back(Sphere(Point( 7, 5, -18), 4, ivory));
+
+    render(spheres);
     return 0;
 }

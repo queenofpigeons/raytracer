@@ -5,6 +5,13 @@
 #include <iostream>
 #include "image.h"
 
+struct Material {
+    Pixel color;
+
+    Material(const Pixel &color) : color(color) {}
+    Material() : color() {}
+};
+
 struct Sphere {
     Point center;
     float radius;
@@ -15,13 +22,6 @@ struct Sphere {
     bool ray_intersect(const Ray &dir, float &t0) const;
 };
 
-Pixel cast_ray(const Ray &dir, const Sphere &sphere);
+Pixel cast_ray(const Ray &dir, const std::vector<Sphere> &spheres);
 
 bool scene_intersect(const Ray &dir, const std::vector<Sphere> &spheres, Point &hit, Point &N, Material &material);
-
-struct Material {
-    Pixel color;
-
-    Material(const Pixel &color) : color(color) {}
-    Material() : color() {}
-};
